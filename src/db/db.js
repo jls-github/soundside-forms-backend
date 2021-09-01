@@ -3,11 +3,22 @@ const dotenv = require("dotenv");
 
 dotenv.config();
 
-const { DB_USER, HOST, DATABASE, DB_PASSWORD, DB_PORT } = process.env;
+const {
+  NODE_ENV,
+  DB_USER,
+  HOST,
+  DATABASE,
+  DB_PASSWORD,
+  DB_PORT,
+  DATABASE_URL,
+} = process.env;
 
-const sequelize = new Sequelize(
-  `postgres://${DB_USER}:${DB_PASSWORD}@${HOST}:${DB_PORT}/${DATABASE}`
-);
+const developmentConnectionString = `postgres://${DB_USER}:${DB_PASSWORD}@${HOST}:${DB_PORT}/${DATABASE}`;
+
+const db_connection_url =
+  NODE_ENV === "production" ? DATABASE_URL : developmentConnectionString;
+
+const sequelize = new Sequelize(db_connection_url);
 
 async function testDatabase() {
   try {
