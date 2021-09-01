@@ -1,4 +1,4 @@
-const { Sequelize, DataTypes } = require("sequelize");
+const { Sequelize, DataTypes, Model } = require("sequelize");
 const dotenv = require("dotenv");
 
 dotenv.config();
@@ -23,19 +23,24 @@ async function synchronizeDatabase() {
   console.log("All models were synchronized successfully.");
 }
 
-const Form = sequelize.define(
-  "Form",
+class Form extends Model {}
+
+Form.init(
   {
     name: {
       type: DataTypes.TEXT,
       allowNull: false,
     },
   },
-  {}
+  {
+    sequelize,
+    modelName: "Form",
+  }
 );
 
-const Question = sequelize.define(
-  "Question",
+class Question extends Model {}
+
+Question.init(
   {
     form_id: {
       type: DataTypes.INTEGER,
@@ -54,11 +59,15 @@ const Question = sequelize.define(
       allowNull: false,
     },
   },
-  {}
+  {
+    sequelize,
+    modelName: "Question",
+  }
 );
 
-const Submission = sequelize.define(
-  "Submission",
+class Submission extends Model {}
+
+Submission.init(
   {
     csv_data: {
       type: DataTypes.TEXT,
@@ -69,7 +78,7 @@ const Submission = sequelize.define(
       allowNull: false,
     },
   },
-  {}
+  { sequelize, modelName: "Submission" }
 );
 
 // testDatabase();
