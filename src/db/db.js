@@ -86,7 +86,6 @@ Submission.init(
     },
     form_id: {
       type: DataTypes.INTEGER,
-      allowNull: false,
     },
   },
   { sequelize, modelName: "Submission" }
