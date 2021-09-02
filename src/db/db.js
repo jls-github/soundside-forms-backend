@@ -31,6 +31,7 @@ async function testDatabase() {
 
 async function synchronizeDatabase() {
   await sequelize.sync({ force: true });
+  sequelize.close()
   console.log("All models were synchronized successfully.");
 }
 
