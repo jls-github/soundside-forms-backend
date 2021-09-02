@@ -18,7 +18,7 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(bodyParser.raw());
-app.use(cors(corsConfig));
+app.use(cors());
 
 app.get("/submissions", async (req, res) => {
   try {
