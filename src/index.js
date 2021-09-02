@@ -7,8 +7,8 @@ const { Submission, handleSequelizeError } = require("./db/db.js");
 dotenv.config();
 
 const corsConfig = {
-  origin:
-    process.env.NODE_ENV === "production" ? "https://soundsideforms.netlify.app" : "*",
+  origin: "*",
+    // process.env.NODE_ENV === "production" ? "https://soundsideforms.netlify.app" : "*",
   optionsSuccessStatus: 200,
   methods: ['GET','POST']
 };
