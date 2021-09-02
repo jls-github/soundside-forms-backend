@@ -1,6 +1,7 @@
 const dotenv = require("dotenv");
 const express = require("express");
 const bodyParser = require("body-parser");
+const moment = require('moment')
 const {
   Submission,
   synchronizeDatabase,
@@ -21,7 +22,16 @@ app.get("/submissions", async (req, res) => {
     const submissions = await Submission.findAll({
       order: [["createdAt", "DESC"]],
     });
-    res.json({ submissions: submissions });
+    const organizedSubmissions = {}
+    submissions.forEach(submission => {
+        const submissionDate = submission.dataValues.createdAt.toString().substring(0, 15)
+        if (!organizedSubmissions[submissionDate]) {
+            organizedSubmissions[submissionDate] = [submission]
+        } else {
+            organizedSubmissions[submissionDate].push(submission)
+        }
+    })
+    res.json({ submissions: organizedSubmissions });
   } catch (err) {
     handleSequelizeError(err, res);
   }
