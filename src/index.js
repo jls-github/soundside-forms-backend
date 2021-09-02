@@ -1,12 +1,14 @@
 const dotenv = require("dotenv");
 const express = require("express");
 const bodyParser = require("body-parser");
-const moment = require('moment')
-const {
-  Submission,
-  synchronizeDatabase,
-  handleSequelizeError,
-} = require("./db/db.js");
+const cors = require("cors");
+const { Submission, handleSequelizeError } = require("./db/db.js");
+
+const corsConfig = {
+  origin:
+    process.env.NODE_ENV === "production" ? "soundsideforms.netlify.app" : "*",
+  optionsSuccessStatus: 200,
+};
 
 dotenv.config();
 
@@ -16,21 +18,24 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(bodyParser.raw());
+app.use(cors(corsConfig));
 
 app.get("/submissions", async (req, res) => {
   try {
     const submissions = await Submission.findAll({
       order: [["createdAt", "DESC"]],
     });
-    const organizedSubmissions = {}
-    submissions.forEach(submission => {
-        const submissionDate = submission.dataValues.createdAt.toString().substring(0, 15)
-        if (!organizedSubmissions[submissionDate]) {
-            organizedSubmissions[submissionDate] = [submission["csv_data"]]
-        } else {
-            organizedSubmissions[submissionDate].push(submission["csv_data"])
-        }
-    })
+    const organizedSubmissions = {};
+    submissions.forEach((submission) => {
+      const submissionDate = submission.dataValues.createdAt
+        .toString()
+        .substring(0, 15);
+      if (!organizedSubmissions[submissionDate]) {
+        organizedSubmissions[submissionDate] = [submission["csv_data"]];
+      } else {
+        organizedSubmissions[submissionDate].push(submission["csv_data"]);
+      }
+    });
     res.json({ submissions: organizedSubmissions });
   } catch (err) {
     handleSequelizeError(err, res);
