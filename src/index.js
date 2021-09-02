@@ -8,6 +8,7 @@ const corsConfig = {
   origin:
     process.env.NODE_ENV === "production" ? "https://soundsideforms.netlify.app" : "*",
   optionsSuccessStatus: 200,
+  methods: ['GET','POST','DELETE','UPDATE','PUT','PATCH']
 };
 
 dotenv.config();
@@ -18,7 +19,7 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(bodyParser.raw());
-app.use(cors());
+app.use(cors(corsConfig));
 
 app.get("/submissions", async (req, res) => {
   try {
