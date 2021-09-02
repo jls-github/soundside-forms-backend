@@ -18,7 +18,7 @@ const developmentConnectionString = `postgres://${DB_USER}:${DB_PASSWORD}@${HOST
 const db_connection_url =
   NODE_ENV === "production" ? DATABASE_URL : developmentConnectionString;
 
-const sequelize = new Sequelize(db_connection_url);
+const sequelize = new Sequelize(db_connection_url, {ssl: NODE_ENV === production ? true : false});
 
 async function testDatabase() {
   try {
