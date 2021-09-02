@@ -4,14 +4,15 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const { Submission, handleSequelizeError } = require("./db/db.js");
 
+dotenv.config();
+
 const corsConfig = {
   origin:
     process.env.NODE_ENV === "production" ? "https://soundsideforms.netlify.app" : "*",
   optionsSuccessStatus: 200,
-  methods: ['GET','POST','DELETE','UPDATE','PUT','PATCH']
+  methods: ['GET','POST']
 };
 
-dotenv.config();
 
 const port = process.env.PORT || 3000;
 
