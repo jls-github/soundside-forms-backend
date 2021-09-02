@@ -6,7 +6,7 @@ const { Submission, handleSequelizeError } = require("./db/db.js");
 
 const corsConfig = {
   origin:
-    process.env.NODE_ENV === "production" ? "soundsideforms.netlify.app" : "*",
+    process.env.NODE_ENV === "production" ? "https://soundsideforms.netlify.app" : "*",
   optionsSuccessStatus: 200,
 };
 
