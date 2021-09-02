@@ -91,6 +91,10 @@ Submission.init(
   { sequelize, modelName: "Submission" }
 );
 
+function handleSequelizeError(error, res) {
+    res.status(500).send({error: error})
+}
+
 // testDatabase();
 // synchronizeDatabase();
 
@@ -98,6 +102,7 @@ module.exports = {
   sequelize,
   testDatabase,
   synchronizeDatabase,
+  handleSequelizeError,
   Form,
   Question,
   Submission,
