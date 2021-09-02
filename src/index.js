@@ -26,9 +26,9 @@ app.get("/submissions", async (req, res) => {
     submissions.forEach(submission => {
         const submissionDate = submission.dataValues.createdAt.toString().substring(0, 15)
         if (!organizedSubmissions[submissionDate]) {
-            organizedSubmissions[submissionDate] = [submission]
+            organizedSubmissions[submissionDate] = [submission["csv_data"]]
         } else {
-            organizedSubmissions[submissionDate].push(submission)
+            organizedSubmissions[submissionDate].push(submission["csv_data"])
         }
     })
     res.json({ submissions: organizedSubmissions });
