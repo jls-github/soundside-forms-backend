@@ -87,7 +87,24 @@ Question.init(
   }
 );
 
-class Submission extends Model {}
+class Submission extends Model {
+  async findOrganizedSubmissions() {
+    const submissions = await this.findAll({
+      order: [["createdAt", "DESC"]],
+    });
+    const organizedSubmissions = {};
+    submissions.forEach((submission) => {
+      const submissionDate = submission.dataValues.createdAt
+        .toString()
+        .substring(0, 15);
+      if (!organizedSubmissions[submissionDate]) {
+        organizedSubmissions[submissionDate] = [submission["csv_data"]];
+      } else {
+        organizedSubmissions[submissionDate].push(submission["csv_data"]);
+      }
+    });
+  }
+}
 
 Submission.init(
   {

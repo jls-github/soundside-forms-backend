@@ -24,20 +24,7 @@ app.use(bodyParser.raw());
 
 app.get("/submissions", async (req, res) => {
   try {
-    const submissions = await Submission.findAll({
-      order: [["createdAt", "DESC"]],
-    });
-    const organizedSubmissions = {};
-    submissions.forEach((submission) => {
-      const submissionDate = submission.dataValues.createdAt
-        .toString()
-        .substring(0, 15);
-      if (!organizedSubmissions[submissionDate]) {
-        organizedSubmissions[submissionDate] = [submission["csv_data"]];
-      } else {
-        organizedSubmissions[submissionDate].push(submission["csv_data"]);
-      }
-    });
+    const organizedSubmissions = Submission.findOrganizedSubmissions()
     res.json({ submissions: organizedSubmissions });
   } catch (err) {
     handleSequelizeError(err, res);
