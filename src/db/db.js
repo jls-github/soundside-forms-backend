@@ -1,7 +1,9 @@
-const { Sequelize, DataTypes, Model } = require("sequelize");
+const { Sequelize } = require("sequelize");
 const dotenv = require("dotenv");
 
 dotenv.config();
+
+// environment variables
 
 const {
   NODE_ENV,
@@ -15,20 +17,24 @@ const {
 
 const developmentConnectionString = `postgres://${DB_USER}:${DB_PASSWORD}@${HOST}:${DB_PORT}/${DATABASE}`;
 
-let sequelize
+// initialize sequelize instance
+
+let sequelize;
 
 if (NODE_ENV === "production") {
-    sequelize = new Sequelize(DATABASE_URL, {
-        dialectOptions: {
-            ssl: {
-                require: true,
-                rejectUnauthorized: false
-            }
-        }
-    });
+  sequelize = new Sequelize(DATABASE_URL, {
+    dialectOptions: {
+      ssl: {
+        require: true,
+        rejectUnauthorized: false,
+      },
+    },
+  });
 } else {
-    sequelize = new Sequelize(developmentConnectionString)
+  sequelize = new Sequelize(developmentConnectionString);
 }
+
+// db helpers
 
 async function testDatabase() {
   try {
@@ -39,91 +45,7 @@ async function testDatabase() {
   }
 }
 
-async function synchronizeDatabase() {
-  await sequelize.sync({ force: true });
-  sequelize.close()
-  console.log("All models were synchronized successfully.");
-}
-
-class Form extends Model {}
-
-Form.init(
-  {
-    name: {
-      type: DataTypes.TEXT,
-      allowNull: false,
-    },
-  },
-  {
-    sequelize,
-    modelName: "Form",
-  }
-);
-
-class Question extends Model {}
-
-Question.init(
-  {
-    form_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-    input_type: {
-      type: DataTypes.TEXT,
-      allowNull: false,
-    },
-    name: {
-      type: DataTypes.TEXT,
-      allowNull: false,
-    },
-    label: {
-      type: DataTypes.TEXT,
-      allowNull: false,
-    },
-  },
-  {
-    sequelize,
-    modelName: "Question",
-  }
-);
-
-class Submission extends Model {
-  static async findOrganizedSubmissions() {
-    const submissions = await this.findAll({
-      order: [["createdAt", "DESC"]],
-    });
-    const organizedSubmissions = {};
-    submissions.forEach((submission) => {
-      const submissionDate = submission.dataValues.createdAt
-        .toString()
-        .substring(0, 15);
-      if (!organizedSubmissions[submissionDate]) {
-        organizedSubmissions[submissionDate] = [submission["csv_data"]];
-      } else {
-        organizedSubmissions[submissionDate].push(submission["csv_data"]);
-      }
-    });
-  }
-}
-
-Submission.init(
-  {
-    csv_data: {
-      type: DataTypes.TEXT,
-      allowNull: false,
-    },
-    form_id: {
-      type: DataTypes.INTEGER,
-    },
-  },
-  { sequelize, modelName: "Submission" }
-);
-
 module.exports = {
   sequelize,
   testDatabase,
-  synchronizeDatabase,
-  Form,
-  Question,
-  Submission,
 };
