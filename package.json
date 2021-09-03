@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node .",
-    "inititalizeModels": "node src/db/initializeModels.js"
+    "initializeModels": "node src/db/initializeModels.js"
   },
   "author": "",
   "license": "ISC",
