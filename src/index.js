@@ -2,17 +2,28 @@ const dotenv = require("dotenv");
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const { Submission, handleSequelizeError } = require("./db/db.js");
+const { Submission } = require("./db/db.js");
 
 dotenv.config();
 
 const corsConfig = {
-  origin: 
-    process.env.NODE_ENV === "production" ? "https://soundsideforms.netlify.app" : "*",
+  origin:
+    process.env.NODE_ENV === "production"
+      ? "https://soundsideforms.netlify.app"
+      : "*",
   optionsSuccessStatus: 200,
-  methods: ['GET','POST']
+  methods: ["GET", "POST"],
 };
 
+function asyncExpressRoute(fn) {
+  return function (...args) {
+    fn(...args).catch(args[2]);
+  };
+}
+
+function handleExpressError(error, req, res, next) {
+  res.status(500).json({ error: error });
+}
 
 const port = process.env.PORT || 3000;
 
@@ -22,26 +33,27 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(bodyParser.raw());
 
-app.get("/submissions", async (req, res) => {
-  try {
-    const organizedSubmissions = Submission.findOrganizedSubmissions()
+app.get(
+  "/submissions",
+  asyncExpressRoute(async (req, res) => {
+    const organizedSubmissions = Submission.findOrganizedSubmissions();
     res.json({ submissions: organizedSubmissions });
-  } catch (err) {
-    handleSequelizeError(err, res);
-  }
-});
+  })
+);
 
-app.post("/submissions", async (req, res) => {
-  const csv_data = req.body["csv_data"];
-  try {
+app.post(
+  "/submissions",
+  asyncExpressRoute(async (req, res) => {
+    const csv_data = req.body["csv_data"];
     const submission = await Submission.create({
       csv_data: csv_data,
     });
     res.json({ csv_data: submission["csv_data"] });
-  } catch (err) {
-    handleSequelizeError(err, res);
-  }
-});
+    handleExpressError(err, res);
+  })
+);
+
+app.use(handleExpressError);
 
 app.listen(port, () => {
   console.log(`server started at http://localhost:${port}`);

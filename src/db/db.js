@@ -88,7 +88,7 @@ Question.init(
 );
 
 class Submission extends Model {
-  async findOrganizedSubmissions() {
+  static async findOrganizedSubmissions() {
     const submissions = await this.findAll({
       order: [["createdAt", "DESC"]],
     });
@@ -119,18 +119,10 @@ Submission.init(
   { sequelize, modelName: "Submission" }
 );
 
-function handleSequelizeError(error, res) {
-    res.status(500).send({error: error})
-}
-
-// testDatabase();
-// synchronizeDatabase();
-
 module.exports = {
   sequelize,
   testDatabase,
   synchronizeDatabase,
-  handleSequelizeError,
   Form,
   Question,
   Submission,
