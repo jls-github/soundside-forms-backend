@@ -2,7 +2,7 @@ const dotenv = require("dotenv");
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const { Submission } = require("./db/db.js");
+const Submission = require("./models/submission.js");
 const Form = require("./models/form.js");
 
 dotenv.config();
@@ -45,20 +45,23 @@ app.get(
 app.post(
   "/submissions",
   asyncExpressRoute(async (req, res) => {
-    const {csv_data, form_id} = req.body["csv_data"];
+    const { csv_data, form_id } = req.body;
     const submission = await Submission.create({
       csv_data: csv_data,
-      form_id: form_id
+      form_id: form_id,
     });
     res.json({ csv_data: submission["csv_data"] });
   })
 );
 
-app.post("/forms", asyncExpressRoute(async (req, res) => {
-  const {guest, name} = req.body
-  const form = await Form.create({guest: guest, name: name})
-  res.json({form: form})
-}))
+app.post(
+  "/forms",
+  asyncExpressRoute(async (req, res) => {
+    const { guest, name } = req.body;
+    const form = await Form.create({ guest: guest, name: name });
+    res.json({ form: form });
+  })
+);
 
 app.use(handleExpressError);
 
