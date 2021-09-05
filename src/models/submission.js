@@ -17,6 +17,7 @@ class Submission extends Model {
         organizedSubmissions[submissionDate].push(submission["csv_data"]);
       }
     });
+    return organizedSubmissions
   }
 }
 

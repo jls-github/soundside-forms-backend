@@ -2,8 +2,8 @@ const dotenv = require("dotenv");
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const Submission = require("./models/submission.js");
-const Form = require("./models/form.js");
+const submissionsController = require("./controllers/submissionsController.js");
+const formsController = require("./controllers/formsController.js");
 
 dotenv.config();
 
@@ -16,12 +16,6 @@ const corsConfig = {
   methods: ["GET", "POST"],
 };
 
-function asyncExpressRoute(fn) {
-  return function (...args) {
-    fn(...args).catch(args[2]);
-  };
-}
-
 function handleExpressError(error, req, res, next) {
   res.status(500).json({ error: error });
 }
@@ -29,39 +23,18 @@ function handleExpressError(error, req, res, next) {
 const port = process.env.PORT || 3000;
 
 const app = express();
+
+// app config
+
 app.use(cors(corsConfig));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(bodyParser.raw());
 
-app.get(
-  "/submissions",
-  asyncExpressRoute(async (req, res) => {
-    const organizedSubmissions = Submission.findOrganizedSubmissions();
-    res.json({ submissions: organizedSubmissions });
-  })
-);
+// controllers
 
-app.post(
-  "/submissions",
-  asyncExpressRoute(async (req, res) => {
-    const { csv_data, form_id } = req.body;
-    const submission = await Submission.create({
-      csv_data: csv_data,
-      form_id: form_id,
-    });
-    res.json({ csv_data: submission["csv_data"] });
-  })
-);
-
-app.post(
-  "/forms",
-  asyncExpressRoute(async (req, res) => {
-    const { guest, name } = req.body;
-    const form = await Form.create({ guest: guest, name: name });
-    res.json({ form: form });
-  })
-);
+submissionsController(app);
+formsController(app);
 
 app.use(handleExpressError);
 
