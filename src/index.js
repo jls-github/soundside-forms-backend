@@ -45,9 +45,10 @@ app.get(
 app.post(
   "/submissions",
   asyncExpressRoute(async (req, res) => {
-    const csv_data = req.body["csv_data"];
+    const {csv_data, form_id} = req.body["csv_data"];
     const submission = await Submission.create({
       csv_data: csv_data,
+      form_id: form_id
     });
     res.json({ csv_data: submission["csv_data"] });
   })
