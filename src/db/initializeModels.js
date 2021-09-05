@@ -1,7 +1,7 @@
 // used only in `npm run initializeModels`
 
 // Creates models in a new database
-// alters models columns in an existing database
+// Alters models columns in an existing database
 
 const { sequelize } = require("./db.js");
 

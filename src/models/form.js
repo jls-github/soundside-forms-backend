@@ -9,6 +9,10 @@ Form.init(
       type: DataTypes.TEXT,
       allowNull: false,
     },
+    guest: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+    },
   },
   {
     sequelize,
