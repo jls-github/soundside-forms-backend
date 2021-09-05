@@ -3,6 +3,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const { Submission } = require("./db/db.js");
+const Form = require("./models/form.js");
 
 dotenv.config();
 
@@ -49,9 +50,14 @@ app.post(
       csv_data: csv_data,
     });
     res.json({ csv_data: submission["csv_data"] });
-    handleExpressError(err, res);
   })
 );
+
+app.post("/forms", asyncExpressRoute(async (req, res) => {
+  const {guest, name} = req.body
+  const form = await Form.create({guest: guest, name: name})
+  res.json({form: form})
+}))
 
 app.use(handleExpressError);
 
