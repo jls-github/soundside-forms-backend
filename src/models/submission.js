@@ -1,4 +1,5 @@
 const { Model, DataTypes } = require("sequelize");
+const Form = require("./form.js");
 const { sequelize } = require("../db/db.js");
 
 class Submission extends Model {
@@ -7,17 +8,26 @@ class Submission extends Model {
       order: [["createdAt", "DESC"]],
     });
     const organizedSubmissions = {};
-    submissions.forEach((submission) => {
+    for (const submission of submissions) {
       const submissionDate = submission.dataValues.createdAt
         .toString()
         .substring(0, 15);
-      if (!organizedSubmissions[submissionDate]) {
-        organizedSubmissions[submissionDate] = [submission["csv_data"]];
+
+      const form = await Form.findByPk(submission.dataValues.form_id);
+
+      const guestStatus = form.guest;
+
+      const csvTitle = `${submissionDate} - ${
+        guestStatus ? "Guest" : "Regular Attender"
+      }`;
+
+      if (!organizedSubmissions[csvTitle]) {
+        organizedSubmissions[csvTitle] = [submission["csv_data"]];
       } else {
-        organizedSubmissions[submissionDate].push(submission["csv_data"]);
+        organizedSubmissions[csvTitle].push(submission["csv_data"]);
       }
-    });
-    return organizedSubmissions
+    }
+    return organizedSubmissions;
   }
 }
 
@@ -29,7 +39,7 @@ Submission.init(
     },
     form_id: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: false,
     },
   },
   { sequelize, modelName: "Submission" }
