@@ -6,8 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node .",
-    "initializeModels": "node src/db/initializeModels.js",
-    "resetDB": "node src/db/resetData.js"
+    "initializeModels": "node tasks/initializeModels.js",
+    "resetDB": "node tasks/resetData.js",
+    "createForms": "node tasks/createForms.js"
   },
   "author": "",
   "license": "ISC",
