@@ -1,9 +1,10 @@
 const Submission = require("../models/submission");
 const asyncRoute = require("../utils/asyncRoute");
+const authRoute = require("../utils/authRoute");
 
 function submissionsController(app) {
-  app.get("/submissions", asyncRoute(index));
   app.post("/submissions", asyncRoute(post));
+  app.get("/submissions", authRoute, asyncRoute(index));
 }
 
 async function index(req, res) {
