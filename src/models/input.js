@@ -1,24 +1,27 @@
 const { Model, DataTypes } = require("sequelize");
-const Submission = require("./submission.js");
 const { sequelize } = require("../db/db.js");
 
-class Form extends Model {}
+class Input extends Model {}
 
-Form.init(
+Input.init(
   {
+    labelText: {
+      type: DataTypes.TEXT,
+      allowNull: false,
+    },
     name: {
       type: DataTypes.TEXT,
       allowNull: false,
     },
-    guest: {
-      type: DataTypes.BOOLEAN,
+    type: {
+      type: DataTypes.TEXT,
       allowNull: false,
     },
   },
   {
     sequelize,
-    modelName: "Form",
+    modelName: "Input",
   }
 );
 
-module.exports = Form;
+module.exports = Input;

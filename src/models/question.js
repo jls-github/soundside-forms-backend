@@ -12,6 +12,9 @@ Question.init(
     input_type: {
       type: DataTypes.TEXT,
       allowNull: false,
+      validates: {
+        isIn: [["text", "textarea", "checkbox", "select"]],
+      },
     },
     name: {
       type: DataTypes.TEXT,
