@@ -58,19 +58,19 @@ async function seedInputs() {
     type: "checkbox",
   });
   await Input.create({
-    labelText: "I have a prayer request",
-    name: "prayer",
-    type: "checkbox",
-  });
-  await Input.create({
     labelText: "I want to know more about following Christ",
     name: "follow",
     type: "checkbox",
   });
   await Input.create({
     labelText: "Any prayer requests?",
-    name: "explain",
+    name: "prayer",
     type: "textarea",
+  });
+  await Input.create({
+    labelText: "How many gospel conversations did you have this week?",
+    name: "gospel_conversations",
+    type: "number",
   });
 
   console.log("Inputs seeded!");
@@ -84,10 +84,25 @@ async function seedFormInputs() {
 
   const nameInput = await Input.findOne({ where: { name: "name" } });
   const emailInput = await Input.findOne({ where: { name: "email" } });
+  const preferredContactInput = await Input.findOne({
+    where: { name: "preferred_contact" },
+  });
+  const pastorInput = await Input.findOne({ where: { name: "pastor" } });
+  const followInput = await Input.findOne({ where: { name: "follow" } });
+  const prayerInput = await Input.findOne({ where: { name: "prayer" } });
+  const gospelConversationsInput = await Input.findOne({
+    where: { name: "gospel_conversations" },
+  });
 
-  await guestForm.addInputs([nameInput, emailInput]);
-
-  await memberForm.addInput(nameInput);
+  await guestForm.addInputs([
+    nameInput,
+    emailInput,
+    preferredContactInput,
+    pastorInput,
+    followInput,
+    prayerInput,
+  ]);
+  await memberForm.addInput([nameInput, gospelConversationsInput, prayerInput]);
 }
 
 seed();
