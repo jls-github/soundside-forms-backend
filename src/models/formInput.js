@@ -5,11 +5,11 @@ class FormInput extends Model {}
 
 FormInput.init(
   {
-    form_id: {
+    formId: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    input_id: {
+    inputId: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },

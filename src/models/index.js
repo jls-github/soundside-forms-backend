@@ -10,17 +10,17 @@ const FormInput = require("./formInput");
 
 // Submission:Form - 1:M
 
-Submission.belongsTo(Form, { foreignKey: "form_id" });
-Form.hasMany(Submission, { foreignKey: "form_id" });
+Submission.belongsTo(Form);
+Form.hasMany(Submission, { onDelete: "cascade", hooks: true });
 
 // Input:Form - M:N
 
-FormInput.belongsTo(Input, { foreignKey: "input_id" });
-FormInput.belongsTo(Form, { foreignKey: "form_id" });
-Input.hasMany(FormInput, { foreignKey: "input_id" });
-Form.hasMany(FormInput, { foreignKey: "form_id" });
-Form.belongsToMany(Input, { through: FormInput, foreignKey: "input_id" });
-Input.belongsToMany(Form, { through: FormInput, foreignKey: "form_id" });
+FormInput.belongsTo(Input);
+FormInput.belongsTo(Form);
+Input.hasMany(FormInput, { onDelete: "cascade", hooks: true });
+Form.hasMany(FormInput, { onDelete: "cascade", hooks: true });
+Form.belongsToMany(Input, { through: FormInput, foreignKey: "formId" });
+Input.belongsToMany(Form, { through: FormInput, foreignKey: "inputId" });
 
 const models = { Submission, Form, Question, Input, FormInput };
 

@@ -4,7 +4,7 @@
 const models = require("../src/models");
 const { sequelize } = require("../src/db/db");
 
-const {Form, Input} = models
+const { Form, Input } = models;
 
 async function seed() {
   await resetModelData();
@@ -13,6 +13,8 @@ async function seed() {
 
   await seedForms();
   await seedInputs();
+  await seedFormInputs();
+
   await sequelize.close();
 
   console.log("Seeding finished!");
@@ -72,6 +74,20 @@ async function seedInputs() {
   });
 
   console.log("Inputs seeded!");
+}
+
+async function seedFormInputs() {
+  const guestForm = await Form.findOne({ where: { name: "Guest Form" } });
+  const memberForm = await Form.findOne({
+    where: { name: "Regular Attender Form" },
+  });
+
+  const nameInput = await Input.findOne({ where: { name: "name" } });
+  const emailInput = await Input.findOne({ where: { name: "email" } });
+
+  await guestForm.addInputs([nameInput, emailInput]);
+
+  await memberForm.addInput(nameInput);
 }
 
 seed();
