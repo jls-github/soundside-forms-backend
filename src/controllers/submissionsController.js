@@ -1,4 +1,4 @@
-const Submission = require("../models/submission");
+const {Submission} = require("../models");
 const asyncRoute = require("../utils/asyncRoute");
 const authRoute = require("../utils/authRoute");
 

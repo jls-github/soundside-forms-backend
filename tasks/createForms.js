@@ -1,7 +1,7 @@
 // Creates the basic forms necessary for services.
 // This will be deprecated once admins are able to build their own forms.
 
-const Form = require("../src/models/form.js");
+const {Form} = require("../src/models");
 const {sequelize} = require('../src/db/db')
 
 async function createForms() {
