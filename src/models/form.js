@@ -1,7 +1,6 @@
 
    
 const { Model, DataTypes } = require("sequelize");
-const Submission = require("./submission.js");
 const { sequelize } = require("../db/db.js");
 
 class Form extends Model {}
