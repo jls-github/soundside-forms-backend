@@ -1,10 +1,11 @@
 const asyncRoute = require("../middleware/asyncRoute");
+const authRoute = require("../middleware/authRoute");
 const {Form, Input} = require("../models");
 
 function formsController(app) {
   app.get("/forms/:id", asyncRoute(show))
-  app.get("/forms", asyncRoute(index))
-  app.post("/forms", asyncRoute(post));
+  app.get("/forms", authRoute, asyncRoute(index))
+  app.post("/forms", authRoute, asyncRoute(post));
 }
 
 async function index(req, res) {
