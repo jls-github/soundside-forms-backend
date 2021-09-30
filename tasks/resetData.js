@@ -5,14 +5,12 @@
 
 const { sequelize } = require("../src/db/db.js");
 
-const Question = require("../src/models.js");
-const Form = require("../src/models.js");
-const Submission = require("../src/models.js");
+const models = require("../src/models");
 
 async function resetData() {
-    await sequelize.sync({ force: true})
-    await sequelize.close()
-    console.log("Database reset")
+  await sequelize.sync({ force: true });
+  await sequelize.close();
+  console.log("Database reset");
 }
 
-resetData()
+resetData();
