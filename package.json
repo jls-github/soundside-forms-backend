@@ -8,7 +8,7 @@
     "start": "node .",
     "initializeModels": "node tasks/initializeModels.js",
     "resetDB": "node tasks/resetData.js",
-    "createForms": "node tasks/createForms.js"
+    "seed": "node tasks/seeds.js"
   },
   "author": "",
   "license": "ISC",

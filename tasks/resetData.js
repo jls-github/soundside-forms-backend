@@ -5,9 +5,9 @@
 
 const { sequelize } = require("../src/db/db.js");
 
-const Question = require("../src/models/question.js");
-const Form = require("../src/models/form.js");
-const Submission = require("../src/models/submission.js");
+const Question = require("../src/models.js");
+const Form = require("../src/models.js");
+const Submission = require("../src/models.js");
 
 async function resetData() {
     await sequelize.sync({ force: true})
