@@ -37,12 +37,12 @@ async function seedInputs() {
   console.log("Seeding inputs...");
   await Input.create({
     labelText: "Name",
-    name: "guest_name",
+    name: "name",
     type: "text",
   });
   await Input.create({
     labelText: "Email",
-    name: "guest_email",
+    name: "email",
     type: "email",
   });
   await Input.create({

@@ -2,8 +2,9 @@ const dotenv = require("dotenv");
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const submissionsController = require("./controllers/submissionsController.js");
-const formsController = require("./controllers/formsController.js");
+const submissionsController = require("./controllers/submissionsController");
+const formsController = require("./controllers/formsController");
+const inputsController = require("./controllers/inputsController");
 
 dotenv.config();
 
@@ -35,6 +36,7 @@ app.use(bodyParser.raw());
 
 submissionsController(app);
 formsController(app);
+inputsController(app);
 
 app.use(handleExpressError);
 
