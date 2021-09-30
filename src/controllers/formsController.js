@@ -1,4 +1,4 @@
-const asyncRoute = require("../utils/asyncRoute");
+const asyncRoute = require("../middleware/asyncRoute");
 const {Form, Input} = require("../models");
 
 function formsController(app) {

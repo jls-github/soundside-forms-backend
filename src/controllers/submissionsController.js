@@ -1,6 +1,6 @@
 const {Submission} = require("../models");
-const asyncRoute = require("../utils/asyncRoute");
-const authRoute = require("../utils/authRoute");
+const asyncRoute = require("../middleware/asyncRoute");
+const authRoute = require("../middleware/authRoute");
 
 function submissionsController(app) {
   app.post("/submissions", asyncRoute(post));
