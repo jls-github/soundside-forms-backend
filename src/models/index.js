@@ -19,10 +19,8 @@ FormInput.belongsTo(Input, { foreignKey: "input_id" });
 FormInput.belongsTo(Form, { foreignKey: "form_id" });
 Input.hasMany(FormInput, { foreignKey: "input_id" });
 Form.hasMany(FormInput, { foreignKey: "form_id" });
-Form.belongsToMany(Input, {through: FormInput})
-Input.belongsToMany(Form, {through: FormInput})
-
-
+Form.belongsToMany(Input, { through: FormInput, foreignKey: "input_id" });
+Input.belongsToMany(Form, { through: FormInput, foreignKey: "form_id" });
 
 const models = { Submission, Form, Question, Input, FormInput };
 

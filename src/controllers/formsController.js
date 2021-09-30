@@ -1,7 +1,8 @@
 const asyncRoute = require("../utils/asyncRoute");
-const {Form} = require("../models");
+const {Form, Input} = require("../models");
 
 function formsController(app) {
+  app.get("/forms/:id", asyncRoute(show))
   app.get("/forms", asyncRoute(index))
   app.post("/forms", asyncRoute(post));
 }
@@ -15,6 +16,12 @@ async function post(req, res) {
   const { guest, name } = req.body;
   const form = await Form.create({ guest: guest, name: name });
   res.json({ form: form });
+}
+
+async function show(req, res) {
+  const {id} = req.params
+  const form = await Form.findByPk(id, {include: [{model: Input}]})
+  res.json({form: form})
 }
 
 module.exports = formsController;
