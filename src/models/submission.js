@@ -45,4 +45,8 @@ Submission.init(
   { sequelize, modelName: "Submission" }
 );
 
+Submission.associate = function(models) {
+  User.belongsTo(models.Form, {foreignKey: 'form_id', as: 'form'})
+}
+
 module.exports = Submission;
