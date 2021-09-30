@@ -4,13 +4,17 @@
 const {Form} = require("../src/models");
 const {sequelize} = require('../src/db/db')
 
-async function createForms() {
-  await Form.create({ name: "Guest Form", guest: true });
-  await Form.create({ name: "Regular Attender Form", guest: false });
-
+async function seed() {
+  console.log("Seeding...")
+  await seedForms()
   await sequelize.close()
-
-  console.log("Forms created!");
+  console.log("Seeding finished!");
 }
 
-createForms()
+async function seedForms() {
+  await Form.create({ name: "Guest Form", guest: true });
+  await Form.create({ name: "Regular Attender Form", guest: false });
+  console.log("Forms seeded!")
+}
+
+seed()
