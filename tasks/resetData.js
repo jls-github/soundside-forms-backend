@@ -1,4 +1,4 @@
-// used only in `npm run initializeModels`
+// used only in `npm run resetDBß`
 
 // Creates models in a new database
 // Alters models columns in an existing database
