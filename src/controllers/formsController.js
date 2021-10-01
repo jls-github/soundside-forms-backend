@@ -16,11 +16,13 @@ async function index(req, res) {
 async function post(req, res) {
   const { guest, name, inputs } = req.body;
   const form = await Form.create({ guest: guest, name: name });
-  for (input of inputs) {
-    const [newInput] = await Input.findOrCreate({
-      where: { ...input },
-    });
-    await form.addInput(newInput);
+  if (inputs) {
+    for (input of inputs) {
+      const [newInput] = await Input.findOrCreate({
+        where: { ...input },
+      });
+      await form.addInput(newInput);
+    }
   }
   res.json({ form: form });
 }
