@@ -17,8 +17,8 @@ const corsConfig = {
   methods: ["GET", "POST"],
 };
 
-function handleExpressError(error, req, res, next) {
-  res.status(500).json({ error: error });
+const jsonErrorHandler = async (err, req, res, next) => {
+  res.status(500).send({ error: err });
 }
 
 const port = process.env.PORT || 3000;
@@ -38,7 +38,7 @@ submissionsController(app);
 formsController(app);
 inputsController(app);
 
-// app.use(handleExpressError);
+app.use(jsonErrorHandler);
 
 app.listen(port, () => {
   console.log(`server started at http://localhost:${port}`);
