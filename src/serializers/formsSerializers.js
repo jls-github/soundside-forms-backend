@@ -12,4 +12,11 @@ async function formsPostSerializer(form) {
   };
 }
 
-module.exports = { formsPostSerializer };
+function formsIndexSerializer(forms) {
+  return forms.map((form) => ({
+    name: form.name,
+    guest: form.guest,
+  }));
+}
+
+module.exports = { formsPostSerializer, formsIndexSerializer };

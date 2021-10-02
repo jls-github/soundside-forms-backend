@@ -1,6 +1,6 @@
 const asyncRoute = require("../middleware/asyncRoute");
 const authRoute = require("../middleware/authRoute");
-const {formsPostSerializer} = require("../serializers/formsSerializers")
+const {formsPostSerializer, formsIndexSerializer} = require("../serializers/formsSerializers")
 const { Form, Input } = require("../models");
 
 function formsController(app) {
@@ -11,7 +11,8 @@ function formsController(app) {
 
 async function index(req, res) {
   const forms = await Form.findAll();
-  res.json(forms);
+  const formsJson = formsIndexSerializer(forms)
+  res.json(formsJson);
 }
 
 async function post(req, res) {
