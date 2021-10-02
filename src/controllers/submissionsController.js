@@ -2,6 +2,9 @@ const {Submission} = require("../models");
 const asyncRoute = require("../middleware/asyncRoute");
 const authRoute = require("../middleware/authRoute");
 
+// TODO: add serializers for this controller
+// TODO: rewrite index response to be an array
+
 function submissionsController(app) {
   app.post("/submissions", asyncRoute(post));
   app.get("/submissions", authRoute, asyncRoute(index));

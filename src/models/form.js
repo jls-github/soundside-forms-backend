@@ -5,6 +5,7 @@ const Input = require("./input.js");
 class Form extends Model {
   static async createWithInputs(guest, name, inputs) {
     const form = await Form.create({ guest: guest, name: name });
+    // TODO: abstract input creation into helper function
     if (inputs) {
       for (const input of inputs) {
         const [newInput] = await Input.findOrCreate({
