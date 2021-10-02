@@ -1,6 +1,10 @@
 const { Model, DataTypes } = require("sequelize");
 const { sequelize } = require("../db/db.js");
 
+// TODO: create slug
+// TODO: validate uniqueness of slug
+// TODO: validate against empty strings
+
 class Input extends Model {}
 
 Input.init(
@@ -18,7 +22,7 @@ Input.init(
       type: DataTypes.TEXT,
       allowNull: false,
       validates: {
-        isIn: [["text", "textarea", "checkbox", "select"]],
+        isIn: [["text", "textarea", "checkbox", "select", "number"]],
       },
     },
   },

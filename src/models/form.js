@@ -2,6 +2,10 @@ const { Model, DataTypes } = require("sequelize");
 const { sequelize } = require("../db/db.js");
 const Input = require("./input.js");
 
+// TODO: create slug
+// TODO: validate uniqueness of slug
+// TODO: validate against empty strings
+
 class Form extends Model {
   static async createWithInputs(guest, name, inputs) {
     const form = await Form.create({ guest: guest, name: name });
