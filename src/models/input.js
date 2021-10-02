@@ -12,10 +12,14 @@ Input.init(
     name: {
       type: DataTypes.TEXT,
       allowNull: false,
+      unique: true,
     },
     type: {
       type: DataTypes.TEXT,
       allowNull: false,
+      validates: {
+        isIn: [["text", "textarea", "checkbox", "select"]],
+      },
     },
   },
   {

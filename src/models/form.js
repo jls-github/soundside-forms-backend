@@ -10,6 +10,7 @@ Form.init(
     name: {
       type: DataTypes.TEXT,
       allowNull: false,
+      unique: true
     },
     guest: {
       type: DataTypes.BOOLEAN,

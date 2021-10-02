@@ -2,7 +2,6 @@
 
 const Form = require("./form.js");
 const Submission = require("./submission.js");
-const Question = require("./question.js");
 const Input = require("./input");
 const FormInput = require("./formInput");
 
@@ -22,6 +21,6 @@ Form.hasMany(FormInput, { onDelete: "cascade", hooks: true });
 Form.belongsToMany(Input, { through: FormInput, foreignKey: "formId" });
 Input.belongsToMany(Form, { through: FormInput, foreignKey: "inputId" });
 
-const models = { Submission, Form, Question, Input, FormInput };
+const models = { Submission, Form, Input, FormInput };
 
 module.exports = models;
