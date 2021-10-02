@@ -38,7 +38,7 @@ submissionsController(app);
 formsController(app);
 inputsController(app);
 
-app.use(handleExpressError);
+// app.use(handleExpressError);
 
 app.listen(port, () => {
   console.log(`server started at http://localhost:${port}`);

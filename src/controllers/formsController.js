@@ -16,15 +16,7 @@ async function index(req, res) {
 
 async function post(req, res) {
   const { guest, name, inputs } = req.body;
-  const form = await Form.create({ guest: guest, name: name });
-  if (inputs) {
-    for (input of inputs) {
-      const [newInput] = await Input.findOrCreate({
-        where: { ...input },
-      });
-      await form.addInput(newInput);
-    }
-  }
+  const form = await Form.createWithInputs(guest, name, inputs)
   const formJson = await formsPostSerializer(form)
   res.json({ form: formJson });
 }
