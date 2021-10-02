@@ -13,9 +13,11 @@ async function formsPostSerializer(form) {
 }
 
 function formsIndexSerializer(forms) {
+  // TODO: remove id from serialization once slugs are implemented
   return forms.map((form) => ({
     name: form.name,
     guest: form.guest,
+    id: form.id,
   }));
 }
 
