@@ -1,6 +1,6 @@
 const asyncRoute = require("../middleware/asyncRoute");
 const authRoute = require("../middleware/authRoute");
-const {formsPostSerializer, formsIndexSerializer} = require("../serializers/formsSerializers")
+const {formsPostSerializer, formsIndexSerializer, formsShowSerializer} = require("../serializers/formsSerializers")
 const { Form, Input } = require("../models");
 
 function formsController(app) {
@@ -25,7 +25,8 @@ async function post(req, res) {
 async function show(req, res) {
   const { id } = req.params;
   const form = await Form.findByPk(id, { include: [{ model: Input }] });
-  res.json({ form: form });
+  const formJson = formsShowSerializer(form)
+  res.json({ form: formJson });
 }
 
 module.exports = formsController;

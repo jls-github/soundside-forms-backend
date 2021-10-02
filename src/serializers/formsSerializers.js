@@ -19,4 +19,20 @@ function formsIndexSerializer(forms) {
   }));
 }
 
-module.exports = { formsPostSerializer, formsIndexSerializer };
+function formsShowSerializer(form) {
+  return {
+    name: form.name,
+    guest: form.guest,
+    inputs: form.Inputs?.map((input) => ({
+      name: input.name,
+      labelText: input.labelText,
+      type: input.type,
+    })),
+  };
+}
+
+module.exports = {
+  formsPostSerializer,
+  formsIndexSerializer,
+  formsShowSerializer,
+};
