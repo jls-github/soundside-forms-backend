@@ -1,4 +1,4 @@
-const {Submission} = require("../models");
+const {Submission, Form} = require("../models");
 const asyncRoute = require("../middleware/asyncRoute");
 const authRoute = require("../middleware/authRoute");
 
@@ -16,10 +16,10 @@ async function index(req, res) {
 }
 
 async function post(req, res) {
-  const { csv_data, form_id } = req.body;
+  const { csv_data, formId } = req.body;
   const submission = await Submission.create({
     csv_data: csv_data,
-    form_id: form_id,
+    formId: formId,
   });
   res.json({ csv_data: submission["csv_data"] });
 }
