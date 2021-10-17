@@ -14,7 +14,7 @@ const corsConfig = {
       ? "https://soundsideforms.netlify.app"
       : "*",
   optionsSuccessStatus: 200,
-  methods: ["GET", "POST"],
+  methods: ["GET", "POST", "PATCH"],
 };
 
 const jsonErrorHandler = async (err, req, res, next) => {
