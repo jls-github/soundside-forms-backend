@@ -35,6 +35,7 @@ async function show(req, res) {
 }
 
 async function update(req, res) {
+  // Need to abstract this logic away to the model later
   const {id} = req.params
   const {name, guest, inputs} = req.body
   const form = await Form.findByPk(id)

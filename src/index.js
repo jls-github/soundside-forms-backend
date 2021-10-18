@@ -5,6 +5,7 @@ const cors = require("cors");
 const submissionsController = require("./controllers/submissionsController");
 const formsController = require("./controllers/formsController");
 const inputsController = require("./controllers/inputsController");
+const sessionsController = require("./controllers/sessionsController");
 
 dotenv.config();
 
@@ -34,6 +35,7 @@ app.use(bodyParser.raw());
 
 // controllers
 
+sessionsController(app);
 submissionsController(app);
 formsController(app);
 inputsController(app);
