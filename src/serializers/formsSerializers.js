@@ -9,6 +9,7 @@ async function formsPostSerializer(form) {
       labelText: input.labelText,
       type: input.type,
     })),
+    id: form.id,
   };
 }
 
