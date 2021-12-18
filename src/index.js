@@ -2,10 +2,8 @@ const dotenv = require("dotenv");
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const submissionsController = require("./controllers/submissionsController");
-const formsController = require("./controllers/formsController");
-const inputsController = require("./controllers/inputsController");
-const sessionsController = require("./controllers/sessionsController");
+const submissionsController = require("./controllers/submissionsController.js");
+const formsController = require("./controllers/formsController.js");
 
 dotenv.config();
 
@@ -15,11 +13,11 @@ const corsConfig = {
       ? "https://soundsideforms.netlify.app"
       : "*",
   optionsSuccessStatus: 200,
-  methods: ["GET", "POST", "PATCH"],
+  methods: ["GET", "POST"],
 };
 
-const jsonErrorHandler = async (err, req, res, next) => {
-  res.status(500).send({ error: err });
+function handleExpressError(error, req, res, next) {
+  res.status(500).json({ error: error });
 }
 
 const port = process.env.PORT || 3000;
@@ -35,12 +33,10 @@ app.use(bodyParser.raw());
 
 // controllers
 
-sessionsController(app);
 submissionsController(app);
 formsController(app);
-inputsController(app);
 
-app.use(jsonErrorHandler);
+app.use(handleExpressError);
 
 app.listen(port, () => {
   console.log(`server started at http://localhost:${port}`);

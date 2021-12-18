@@ -5,14 +5,16 @@
 
 const { sequelize } = require("../src/db/db.js");
 
-const models = Object.values(require("../src/models"));
+const Question = require("../src/models/question.js");
+const Form = require("../src/models/form.js");
+const Submission = require("../src/models/submission.js");
 
 async function initializeModels(models) {
   for (model of models) {
     await model.sync({ alter: true });
   }
   sequelize.close();
-  console.log("Models initialized");
+  console.log("Models initialized")
 }
 
-initializeModels(models);
+initializeModels([Question, Form, Submission]);

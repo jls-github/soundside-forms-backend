@@ -13,7 +13,7 @@ class Submission extends Model {
         .toString()
         .substring(0, 15);
 
-      const form = await Form.findByPk(submission.dataValues.formId);
+      const form = await Form.findByPk(submission.dataValues.form_id);
 
       const guestStatus = form.guest;
 
@@ -37,7 +37,7 @@ Submission.init(
       type: DataTypes.TEXT,
       allowNull: false,
     },
-    formId: {
+    form_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },

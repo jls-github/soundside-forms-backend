@@ -1,9 +1,6 @@
-const {Submission, Form} = require("../models");
-const asyncRoute = require("../middleware/asyncRoute");
-const authRoute = require("../middleware/authRoute");
-
-// TODO: add serializers for this controller
-// TODO: rewrite index response to be an array
+const Submission = require("../models/submission");
+const asyncRoute = require("../utils/asyncRoute");
+const authRoute = require("../utils/authRoute");
 
 function submissionsController(app) {
   app.post("/submissions", asyncRoute(post));
@@ -16,10 +13,10 @@ async function index(req, res) {
 }
 
 async function post(req, res) {
-  const { csv_data, formId } = req.body;
+  const { csv_data, form_id } = req.body;
   const submission = await Submission.create({
     csv_data: csv_data,
-    formId: formId,
+    form_id: form_id,
   });
   res.json({ csv_data: submission["csv_data"] });
 }
