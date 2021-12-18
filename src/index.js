@@ -8,10 +8,7 @@ const formsController = require("./controllers/formsController.js");
 dotenv.config();
 
 const corsConfig = {
-  origin:
-    process.env.NODE_ENV === "production"
-      ? "https://soundsideforms.netlify.app"
-      : "*",
+  origin: "*",
   optionsSuccessStatus: 200,
   methods: ["GET", "POST"],
 };
