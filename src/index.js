@@ -10,15 +10,17 @@ const sessionsController = require("./controllers/sessionsController");
 dotenv.config();
 
 const corsConfig = {
-  origin: function(origin, callback) {
-    if (process.env.NODE_ENV !== "production") {
-      callback(null, true)
-    } else if (["https://soundsideforms.netlify.app", "https://soundsidenativity.netlify.app/"].includes(origin)) {
-      callback(null, true)
-    } else {
-      callback(new Error('Not allowed by CORS'))
-    }
-  },
+  origin: "*",
+  // TODO: implement multiple cors instead of all access
+  // function(origin, callback) {
+  //   if (process.env.NODE_ENV !== "production") {
+  //     callback(null, true)
+  //   } else if (["https://soundsideforms.netlify.app", "https://soundsidenativity.netlify.app/"].includes(origin)) {
+  //     callback(null, true)
+  //   } else {
+  //     callback(new Error('Not allowed by CORS'))
+  //   }
+  // },
   optionsSuccessStatus: 200,
   methods: ["GET", "POST", "PATCH"],
 };
